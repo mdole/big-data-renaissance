@@ -53,4 +53,8 @@ for doc in lda_corpus:
     print doc
 
 
-
+pdocs = lda.print_topics(100)
+new_pdocs = [[word for word in pdoc.split('+')] for pdoc in pdocs]
+pandas_dict = {}
+for i in range(1, 101):
+    pandas_dict[str(i)] = new_pdocs[i-1]
