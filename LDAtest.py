@@ -47,7 +47,7 @@ dictionary.filter_extremes(no_below = 2)
 #with the new dictionary, convert the corpus
 corpus = [dictionary.doc2bow(text) for text in texts]
 
-lda = models.LdaModel(corpus, num_topics = 100)
+lda = models.LdaModel(corpus, id2words=dictionary, num_topics = 100)
 lda_corpus = lda[corpus]
 for doc in lda_corpus:
     print doc
