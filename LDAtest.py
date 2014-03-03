@@ -55,11 +55,11 @@ for doc in lda_corpus:
     print doc
 
 
-pdocs = lda.print_topics(100)
-new_pdocs = [[word for word in pdoc.split('+')] for pdoc in pdocs]
-pandas_dict = {}
+topics = lda.print_topics(100)
+new_topics = [[word for word in pdoc.split('+')] for pdoc in pdocs]
+topics_dict = {}
 for i in range(1, 101):
-    pandas_dict[str(i)] = new_pdocs[i-1]
+    topics_dict[str(i)] = new_toipcs[i-1]
 
 
 #transform dictionary to a dataframe and export as a csv file
@@ -67,11 +67,25 @@ for i in range(1, 101):
 topics_df = pd.DataFrame(pandas_dict)
 topics_df.to_csv()
 
+#------------------------------------------------------------------------------
+#                               TESTING FOR OVERLAP
+#define a function to remove the weights from the list
+#this is only used to find overlapping categories, and should NOT be used for
+#analysis
 def remove_weights(list):
 	for i in range(0, len(list)):
 	    for j in range(0, len(list[i])):
     		list[i][j] = re.sub(r'0\.\d*\*', '', list[i][j])
 	return list 
 
+topics_noweight = remove_weights(topics)
+
+#transform no-weights list to dictionary so we can convert to pandas data frame
+#you may need to transpose the resulting DataFrame, and then write to csv
+noweight_dict = {}
+for i in range(1, 101):
+    noweight_dict[i] = topics_noweight[i-1]
+noweights_df = pd.DataFrame(noweight_dict)
+topics_df.to_csv()
 
 
