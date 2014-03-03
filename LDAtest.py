@@ -2,6 +2,7 @@ From nltk.corpus import stopwords
 from gensim import corpora, models, similarities
 import json
 import pandas as pd
+import re
 
 #load some documents from the JSON files. You'll have to be working in raw
 #folder in order for this to work. 
@@ -65,3 +66,12 @@ for i in range(1, 101):
 #change the directory path accordingly
 topics_df = pd.DataFrame(pandas_dict)
 topics_df.to_csv()
+
+def remove_weights(list):
+	for i in range(0, len(list)):
+	    for j in range(0, len(list[i])):
+    		list[i][j] = re.sub(r'0\.\d*\*', '', list[i][j])
+	return list 
+
+
+
