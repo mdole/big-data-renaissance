@@ -1,9 +1,11 @@
-From nltk.corpus import stopwords
+from nltk.corpus import stopwords
 from gensim import corpora, models, similarities
 import json
 import pandas as pd
 import re
 
+#------------------------------------------------------------------------------
+#                             LOADING JSON FILES
 #load some documents from the JSON files. You'll have to be working in raw
 #folder in order for this to work. 
 doc1 = json.loads(open('A10228_PURCHAS_Purchas his pilgrimage. Or Relations of the world and the_content.json').read())
@@ -17,6 +19,7 @@ doc4 = json.loads(open('A10246_QUARLES_Argalus and Parthenia The argument of ye 
 doc5 = json.loads(open('A10251_QUARLES_Diuine fancies digested into epigrammes, meditations, and_content.json').read())
 
 #----------------------------------------------------------------------------
+#                                 RUN GENSIM
 #Define some functions that will put the documents in a form such that gensim
 #can easily work with them
 
@@ -30,7 +33,7 @@ def json2doc(json, documents):
     documents.append(text)
     return documents
 
-#use this function to create a list of documents. Is there a way to make
+#use these commands to create a list of documents. Is there a way to make
 #this that requires less repitition?
 documents = []
 documents = json2doc(doc1, documents)
@@ -88,4 +91,12 @@ for i in range(1, 101):
 noweights_df = pd.DataFrame(noweight_dict)
 topics_df.to_csv()
 
+#find all distinct topics
+all_topics = sum(topics_noweight, [])
+all_topics = [word.strip() for word in all_topics]
+distinct_topics = set(all_topics)
 
+#function to find words that have count equal to given value
+def num_words(number):
+	x = [topic for topic in all_topics if all_topics.count(topic) == number]
+	return x
