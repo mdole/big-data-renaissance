@@ -1,11 +1,7 @@
 import os
 
 def make_subfolders(top_dir):
-    directs = []
-    for root, dirs, files in os.walk(top_dir):   #collects the name of all of the .txt file for later use
-	for file in files:
-	    if file.endswith(".txt"):
-		directs.append(file[:-4])
+    directs = [f[:-4] for f in os.listdir(top_dir) if f.endswith(".txt")] #collects all names of .txt files for later use
     for name in directs:                
 	if not os.path.exists(top_dir + "/%s" %name): #makes a new directory from the .txt name if one doesn't exist
 	    os.mkdir(top_dir + "/%s" %name)
