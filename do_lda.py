@@ -137,6 +137,49 @@ def unique_words(list):
 	unique_words = set(lst)
 	return unique_words
 
+def lda_to_csv(ldallocation, filename, weights = True):
+    # Takes the result of an LDA output and writes a csv to file
+    # You have the option to remove weights for output clarity
+
+    entries = [entry.split('+') for entry in ldallocation.print_topics(ldallocation.num_topics)]
+    if weights == False:
+	entries = [[re.sub(r'0.\d*\*', '', word) for word in entry] for entry in entries] 
+    dictionary = {}
+    for i in range(0, len(entries)):
+	dictionary['topic ' + str(i + 1)] = entries[i]
+    df = pd.DataFrame(dictionary)
+    if len(df.index) == 10:
+	df = df.transpose()
+    df.to_csv(filename)  
+
+def csv_to_list(filename):    
+    #a helper function to get the csv files back to a list format
+
+    df = pd.DataFrame.from_csv(filename)
+    list_words = df.values.tolist()
+    return list_words
+
+def csv_filtered(input_file, output_file, cutoff = 0):
+    # Takes in a csv file as input, and filters out all topics less than the cutoff value
+
+    topics = csv_to_list(input_file)
+    filtered_topics = [topic for topic in topics if weight_sum(topic) > cutoff]
+    list_to_csv(filtered_topics, output_file)
+
+def weight_sum(topic):
+    # A function that sums the total weight of the first 10 words in a given topic
+
+    weights = [float(re.sub(r'\*\w*', '', word)) for word in topic]
+    total = sum(weights) 
+    return total
+
+def dispersion(topics, text):
+    # Function to make dispersion plot from list of topics
+    # The text input is an nltk.Text class of the corpus for the given topic
+    words = [[re.sub(r'\d\.\d*\*', '', word).strip() for word in topic] for topic in topics]
+    for i in range(0, len(words)):
+	text.dispersion_plot(words[i])
+
 #words in set1 not in set2
 def percent_change(set1, set2):
 	# Given the set of topics from two different corpuses, finds
