@@ -46,7 +46,7 @@ stopwords = ['tooke', 'beene', 'certaine', 'gaue', 'whiche', 'vse', 'haue',
         'wee','hym', 'foure', 'fiue', 'twentie', 'thei','euen','seuen', 'sixe',
         'sonnes', 'vpon', 'bee', 'againe', 'd', 'c', 'y', 'us', 'p', 'l', 'm',
 	'e', 'de','chap','al','ye','est', 'la', 'le', 'qu', 'que', 'b', 'r', 
-	'ut', 'en', 'il','i', 'unto', 'vnto', 'upon', 'ad]
+	'ut', 'en', 'il','i', 'unto', 'vnto', 'upon', 'ad']
 
 def remove_oldesw(dict):
         # Function to remove Olde English stopwords from corpus
