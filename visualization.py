@@ -6,21 +6,23 @@ import nltk
 
 #makes csv of phi matrix and unique words in order
 def phi_words(corpus, lda, filename1, filename2):
-	#lda = models.LdaModel(corpus,num_topics=10,passes=1)
 	lda_corpus = lda[corpus]
+	#get topics
 	pairs = lda.show_topics(10, topn=lda.num_terms, formatted = False);
-	#full_topics = [topic.split('+') for topic in topics]
-	#pairs = [[tuple(pair.split('*')) for pair in topic] for topic in full_topics]
+	#sort by tokens
 	sorted_pairs = [sorted(pair, key=lambda pairr: int(pairr[1])) for pair in pairs]
+	#get data for phi matrix
 	probs = [[word[0] for word in topic] for topic in sorted_pairs]
 	dict = {}
 	for i in range(1,11):
 		dict[i] = probs[i-1]
 	df = pd.DataFrame(dict)
 	df.to_csv(filename1)
+	#Get the tokens
 	d = corpus.dictionary.token2id
         fr = pd.DataFrame(data = d, index=[0])
         frame = fr.T
+	#sort tokens
         sorted_frame = frame.sort([0])
 	sorted_frame.to_csv(filename2)
 	
