@@ -47,6 +47,8 @@ def par_lda(filepath, topic_num, pass_num):
 	corpus = MyCorpus(filepath)
 	# These paragraphs are translated to modern English, so we can use standard stopword removal techniques
 	remove_engsw(corpus)
+	# Make sure no olde english stopwords sneak in
+	remove_oldesw(corpus.dictionary)
 	lda = models.LdaModel(corpus, id2word = corpus.dictionary, num_topics = topic_num, passes = pass_num);
         lda_corpus = lda[corpus]
         topics = lda.print_topics(topic_num)
@@ -116,7 +118,7 @@ def topics_df(list):
 
 def remove_weights(list):
 	# Removes the weights from each word in a topic
-	# to enable faster analysis of the content of each topic
+# to enable faster analysis of the content of each topic
 	
         for i in range(0, len(list)):
             for j in range(0, len(list[i])):
