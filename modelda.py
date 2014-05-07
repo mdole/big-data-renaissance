@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 
 def basic_lda(corpus, pass_num):
 	remove_engsw(corpus)
-	remove_oldesw(corpus.dictionary)
+	remove_oldesw(corpus)
 	lda = models.LdaModel(corpus,  num_topics = 10, passes = pass_num)
 	return lda
 
