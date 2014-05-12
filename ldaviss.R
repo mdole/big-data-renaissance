@@ -1,14 +1,14 @@
-ldavis_inputs = function(phifile, tokenfile, freqfile)
+ldavis_inputs = function(country)
 {
 	library(LDAvis)
 	
-	pi <- read.csv(phifile)
+	pi <- read.csv(paste("/Users/abbystevens/BigDataRenaissance/big-data-renaissance/csvisualations/", country, "Phi.csv", sep=""))
 	phi<- data.matrix(subset(pi, select=-X))
 	
-	tok <- read.csv(tokenfile)
+	tok <- read.csv(paste("/Users/abbystevens/BigDataRenaissance/big-data-renaissance/csvisualations/", country, "Tokens.csv", sep=""))
 	tokens <- data.matrix(tok$X)
 	
-	fre <- read.csv(freqfile)
+	fre <- read.csv(paste("/Users/abbystevens/BigDataRenaissance/big-data-renaissance/csvisualations/", country, "Freqs.csv", sep=""))
 	freq <- data.matrix(fre$X0)
 	
 	probs = rep(.1, 10)
